@@ -1,0 +1,879 @@
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp.sln
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT_API_sharp", "MQTT_API_sharp\MQTT_API_sharp.csproj", "{4D09C789-FCAA-4DDC-8500-060D92ADC7D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D09C789-FCAA-4DDC-8500-060D92ADC7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D09C789-FCAA-4DDC-8500-060D92ADC7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D09C789-FCAA-4DDC-8500-060D92ADC7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D09C789-FCAA-4DDC-8500-060D92ADC7D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B8EB942-3FD4-4C9C-8D23-5D5FD106F848}
+	EndGlobalSection
+EndGlobal
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp.sln.DotSettings.user
+<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASameSiteMode_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F855f21f58421f59a68eb18ef5138ac6e95576e8d2b762e85bc3f9af211ae183b_003FSameSiteMode_002Ecs/@EntryIndexedValue">ForceIncluded</s:String></wpf:ResourceDictionary>
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\README.md
+# MQTT_API_sharp
+
+[Русская версия](README.ru.md)
+
+111
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\README.ru.md
+# MQTT_API_sharp
+
+[English version](README.md)
+
+Главный узел обмена данными в системе.
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\appsettings.Development.json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\appsettings.json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "RepositorySettings": {
+    "ConnectionString": "Host=localhost;Port=5432;Database=mqtt_api_db;Username=postgres;Password=your_password"
+  },
+  "AllowedHosts": "*"
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\MQTT_API_sharp.csproj
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
+    <PackageReference Include="Tmds.Systemd.Logging" Version="0.8.0" />
+  </ItemGroup>
+
+</Project>
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\MQTT_API_sharp.csproj.user
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ActiveDebugProfile>https</ActiveDebugProfile>
+    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+  </PropertyGroup>
+</Project>
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\MQTT_API_sharp.http
+@MQTT_API_sharp_HostAddress = http://localhost:5103
+
+GET {{MQTT_API_sharp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Program.cs
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using MQTT_API_sharp.Core.Interfaces;
+using MQTT_API_sharp.DataWork;
+using MQTT_API_sharp.DataWork.Repositories;
+
+namespace MQTT_API_sharp
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+			// Add services to the container.
+			builder.Services.AddControllers();
+
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.Cookie.Name = "MqttApiSession"; // Имя вашей куки
+					options.ExpireTimeSpan = TimeSpan.FromDays(1); // Время жизни сессии
+					options.SlidingExpiration = true; // Продлевать сессию при активности
+        
+					// Важно для API: отключаем редирект на Login страницу при ошибке доступа
+					options.Events.OnRedirectToLogin = context =>
+					{
+						context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+						return Task.CompletedTask;
+					};
+        
+					// Важно для API: отключаем редирект при запрете доступа
+					options.Events.OnRedirectToAccessDenied = context =>
+					{
+						context.Response.StatusCode = StatusCodes.Status403Forbidden;
+						return Task.CompletedTask;
+					};
+				});
+
+			builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+			// Чтение конфига repo
+			var repoSection = builder.Configuration.GetSection("RepositorySettings");
+			builder.Services.AddDbContextFactory<AppDbContext>(optionsAction =>
+			{
+				optionsAction.UseNpgsql(repoSection["ConnectionString"]); 
+			});
+			builder.Services.AddScoped<IDataRepository, DatabaseRepository>();
+
+			var app = builder.Build();
+            
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Controllers\AuthController.cs
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MQTT_API_sharp.Core.Entities;
+using MQTT_API_sharp.Core.Interfaces;
+using MQTT_API_sharp.Core.Models;
+
+namespace MQTT_API_sharp.Controllers
+{
+	[Route("api-mqtt/[controller]")]
+	[ApiController]
+	internal class AuthController : ControllerBase
+	{
+		private readonly IDataRepository _dataRepository;
+
+		public AuthController(IDataRepository dataRepository, ILogger<AuthController> logger)
+		{
+			_dataRepository = dataRepository;
+		}
+
+		[Authorize]
+		[HttpGet("check-auth")]
+		public IActionResult CheckAuth()
+		{
+			// Если код дошел сюда, значит кука валидна (спасибо атрибуту [Authorize]).
+			// Данные пользователя берем из User (ClaimsPrincipal).
+    
+			return Ok(new
+			{
+				IsAuthenticated = true,
+				Login = User.Identity?.Name, // Login, который мы записали в ClaimTypes.Name
+				Id = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value // ID пользователя
+			});
+		}
+
+		[HttpPost("login")]
+		public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginModel)
+		{
+			if (string.IsNullOrWhiteSpace(loginModel.Login) || string.IsNullOrWhiteSpace(loginModel.Password))
+				return BadRequest("Error in auth!");
+
+			User? user = await _dataRepository.GetUserAsync(loginModel.Login);
+    
+			if (user == null)
+				return BadRequest("User is not found!");
+
+			// Внимание: хранить пароли в открытом виде небезопасно, 
+			// но оставляю логику сравнения как у вас в оригинале
+			if (user.Password_User != loginModel.Password)
+				return BadRequest("Wrong password!");
+
+			// === СОЗДАНИЕ СЕССИИ (COOKIE) ===
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, user.Login_User),
+				new Claim(ClaimTypes.NameIdentifier, user.ID_User.ToString())
+				// Можно добавить роль, если есть: new Claim(ClaimTypes.Role, "Admin")
+			};
+
+			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			var authProperties = new AuthenticationProperties
+			{
+				IsPersistent = true, // Сохранять куку после закрытия браузера
+				AllowRefresh = true
+			};
+
+			await HttpContext.SignInAsync(
+				CookieAuthenticationDefaults.AuthenticationScheme,
+				new ClaimsPrincipal(claimsIdentity),
+				authProperties);
+
+			return Ok(new { message = "Logged in successfully" });
+		}
+
+		[Authorize]
+		[HttpPost("logout")]
+		public async Task<IActionResult> LogoutAsync()
+		{
+			// === УДАЛЕНИЕ СЕССИИ ===
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+			return Ok(new { message = "Logged out" });
+		}
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Controllers\DataController.cs
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MQTT_API_sharp.Core.Entities;
+using MQTT_API_sharp.Core.Interfaces;
+using MQTT_API_sharp.Core.Models;
+
+namespace MQTT_API_sharp.Controllers
+{
+	[Route("api-mqtt/[controller]")]
+	[ApiController]
+	[Authorize]
+	internal class DataController : ControllerBase
+	{
+		private readonly IDataRepository _dataRepository;
+
+		public DataController(IDataRepository dataRepository, ILogger<DataController> logger)
+		{
+			_dataRepository = dataRepository;
+		}
+
+		[HttpPost("topics/add")]
+		public async Task<IActionResult> AddTopicAsync([FromBody] CreateTopicDto topicDto)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				// Маппим DTO в entity
+				var topic = new Topic
+				{
+					Name_Topic = topicDto.Name_Topic,
+					Path_Topic = topicDto.Path_Topic,
+					Latitude_Topic = topicDto.Latitude_Topic,
+					Longitude_Topic = topicDto.Longitude_Topic,
+					Altitude_Topic = topicDto.Altitude_Topic,
+					AltitudeSensor_Topic = topicDto.AltitudeSensor_Topic,
+					//CheckTime_Topic = DateTime.UtcNow.Ticks
+				};
+
+				await _dataRepository.AddTopicAsync(topic);
+
+				return CreatedAtAction(nameof(GetTopicAsync), new { id = topic.ID_Topic }, topic);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error adding topic");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+		[HttpDelete("topics/{topicId}")]
+		public async Task<IActionResult> DeleteTopicAsync(int topicId)
+		{
+			try
+			{
+				var deletedCount = await _dataRepository.RemoveTopicAsync(topicId);
+
+				if (deletedCount == 0)
+					return NotFound($"Topic with ID {topicId} not found");
+
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error deleting topic");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+		[HttpGet("topics")]
+		public async Task<IActionResult> GetTopicsAsync()
+		{
+			try
+			{
+				var topics = await _dataRepository.GetTopicsAsync();
+				return Ok(topics);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error getting topics");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+		[HttpGet("topics/{topicId}")]
+		public async Task<IActionResult> GetTopicAsync(int topicId)
+		{
+			if (topicId <= 0)
+				return BadRequest("Valid topic ID is required");
+
+			try
+			{
+				var topic = await _dataRepository.GetTopicAsync(topicId);
+
+				if (topic == null)
+					return NotFound();
+
+				return Ok(topic);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error getting topic");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+		
+		[HttpGet("topics/formPath")]
+		public async Task<IActionResult> GetTopicAsync([FromQuery] string? path = null)
+		{
+			if (string.IsNullOrWhiteSpace(path))
+				return BadRequest("Valid topic path is required");
+
+			try
+			{
+				var topic = await _dataRepository.GetTopicAsync(path);
+
+				if (topic == null)
+					return NotFound();
+
+				return Ok(topic);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error getting topic");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+		[HttpGet("topics/{topicId}/data")]
+		public async Task<IActionResult> GetTopicDataAsync(int topicId, [FromQuery] int? limit = null)
+		{
+			if (topicId <= 0)
+				return BadRequest("Valid topic ID is required");
+
+			try
+			{
+				List<Data> data;
+				if (limit.HasValue && limit > 0)
+					data = await _dataRepository.GetDataAsync(topicId, limit.Value);
+				else
+					data = await _dataRepository.GetDataAsync(topicId);
+
+				if (data == null || data.Count == 0)
+					return NotFound($"No data found for topic ID {topicId}");
+
+				return Ok(data);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error getting topic data");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+
+		[HttpGet("topics/{topicId}/points")]
+		public async Task<IActionResult> GetTopicPointsAsync(int topicId)
+		{
+			if (topicId <= 0)
+				return BadRequest("Valid topic ID is required");
+
+			try
+			{
+				AreaPoint? point = await _dataRepository.GetAreaPointsAsync(topicId);
+				if (point == null)
+					return NotFound($"No area points found for topic ID {topicId}");
+
+				return Ok(point.Depression_AreaPoint);
+			}
+			catch (Exception ex)
+			{
+				//_logger.LogError(ex, "Error getting area points");
+				return StatusCode(500, "Internal server error");
+			}
+		}
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Entities\AreaPoint.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MQTT_API_sharp.Core.Entities
+{
+	[Table("area_points")]
+	internal class AreaPoint
+	{
+		[Key]
+		[Column("id_areapoint")]
+		public int ID_AreaPoint { get; set; }
+
+		[Required]
+		[Column("id_topic")]
+		public int ID_Topic { get; set; }
+
+		[Column("depression_areapoint")]
+		public string? Depression_AreaPoint { get; set; }
+
+		//-------------------------------------------------------------
+
+		public Topic? Topic { get; set; }
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Entities\Data.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MQTT_API_sharp.Core.Entities
+{
+	[Table("data")]
+	internal class Data
+	{
+		[Key]
+		[Column("id_data")]
+		public int ID_Data { get; set; }
+
+		[Required]
+		[Column("id_topic")]
+		public int ID_Topic { get; set; }
+
+		[Required]
+		[Column("value_data")]
+		public string? Value_Data { get; set; }
+
+		[Required]
+		[Column("time_data")]
+		public long Time_Data { get; set; }
+
+		//-------------------------------------------------------------
+
+		public Topic? Topic { get; set; }
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Entities\Topic.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MQTT_API_sharp.Core.Entities
+{
+	[Table("topics")]
+	internal class Topic
+	{
+		[Key]
+		[Column("id_topic")]
+		public int ID_Topic { get; set; }
+
+		[MaxLength(255)]
+		[MinLength(1)]
+		[Required]
+		[Column("name_topic")]
+		public string? Name_Topic { get; set; }
+
+		[MaxLength(255)]
+		[MinLength(1)]
+		[Required]
+		[Column("path_topic")]
+		public string? Path_Topic { get; set; }
+
+		[Required]
+		[Column("latitude_topic")]
+		public double Latitude_Topic { get; set; }
+
+		[Required]
+		[Column("longitude_topic")]
+		public double Longitude_Topic { get; set; }
+
+		[Required]
+		[Column("altitude_topic")]
+		public double Altitude_Topic { get; set; }
+
+		[Required]
+		[Column("altitudesensor_topic")]
+		public double AltitudeSensor_Topic { get; set; }
+
+		//-------------------------------------------------------------
+
+		public ICollection<Data> Data { get; set; }
+
+		public ICollection<AreaPoint> AreaPoints { get; set; }
+
+		public Topic()
+		{
+			Data = new List<Data>();
+			AreaPoints = new List<AreaPoint>();
+		}
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Entities\User.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MQTT_API_sharp.Core.Entities
+{
+	[Table("users")]
+	internal class User
+	{
+		[Key]
+		[Column("id_user")]
+		public int ID_User { get; set; }
+
+		[MaxLength(100)]
+		[MinLength(3)]
+		[Required]
+		[Column("login_user")]
+		public string? Login_User { get; set; }
+
+		[MaxLength(100)]
+		[MinLength(3)]
+		[Required]
+		[Column("password_user")]
+		public string? Password_User { get; set; }
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Interfaces\IDataRepository.cs
+using Microsoft.AspNetCore.Mvc;
+using MQTT_API_sharp.Core.Entities;
+
+namespace MQTT_API_sharp.Core.Interfaces
+{
+	internal interface IDataRepository
+	{
+		Task<User?> GetUserAsync(string login, CancellationToken cancellationToken = default);
+
+		Task AddTopicAsync(Topic topic, CancellationToken cancellationToken = default);
+
+		Task<int?> RemoveTopicAsync(int topicId, CancellationToken cancellationToken = default);
+
+		Task<List<Topic>> GetTopicsAsync(CancellationToken cancellationToken = default);
+
+		Task<Topic?> GetTopicAsync(int id, CancellationToken cancellationToken = default);
+
+		Task<Topic?> GetTopicAsync(string path, CancellationToken cancellationToken = default);
+
+		Task<List<Data>> GetDataAsync(int topicId, CancellationToken cancellationToken = default);
+
+		Task<List<Data>> GetDataAsync(int topicId, int limit, CancellationToken cancellationToken = default);
+
+		Task<AreaPoint?> GetAreaPointsAsync(int topicId, CancellationToken cancellationToken = default);
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Models\CreateTopicDto.cs
+using System.ComponentModel.DataAnnotations;
+
+namespace MQTT_API_sharp.Core.Models
+{
+	internal class CreateTopicDto
+	{
+		[MinLength(1)]
+		[Required]
+		public string? Name_Topic { get; set; }
+
+		[MinLength(1)]
+		[Required]
+		public string? Path_Topic { get; set; }
+
+		[Range(-90, 90)]
+		public double Latitude_Topic { get; set; }
+
+		[Range(-180, 180)]
+		public double Longitude_Topic { get; set; }
+
+		public double Altitude_Topic { get; set; }
+
+		public double AltitudeSensor_Topic { get; set; }
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Core\Models\LoginDto.cs
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+namespace MQTT_API_sharp.Core.Models
+{
+	internal class LoginDto
+	{
+		[Required(ErrorMessage = "Login is required")]
+		[JsonPropertyName("login_user")]
+		public string? Login { get; set; }
+
+		[Required(ErrorMessage = "Password is required")]
+		[JsonPropertyName("password_user")]
+		public string? Password { get; set; }
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\DataWork\AppDbContext.cs
+using Microsoft.EntityFrameworkCore;
+using MQTT_API_sharp.Core.Entities;
+
+namespace MQTT_API_sharp.DataWork
+{
+	internal class AppDbContext : DbContext
+	{
+		public DbSet<User> Users { get; set; }
+		public DbSet<Topic> Topics { get; set; }
+		public DbSet<Data> Data { get; set; }
+		public DbSet<AreaPoint> AreaPoints { get; set; }
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			optionsBuilder.UseNpgsql();
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			// Настройка User
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity.HasKey(u => u.ID_User);
+				entity.Property(u => u.Login_User).IsRequired();
+				entity.Property(u => u.Password_User).IsRequired();
+				entity.HasIndex(u => u.Login_User).IsUnique();
+			});
+
+			// Настройка Topic
+			modelBuilder.Entity<Topic>(entity =>
+			{
+				entity.HasKey(t => t.ID_Topic);
+				entity.Property(t => t.Name_Topic).IsRequired();
+				entity.Property(t => t.Path_Topic).IsRequired();
+				entity.Property(t => t.Latitude_Topic).IsRequired();
+				entity.Property(t => t.Longitude_Topic).IsRequired();
+				entity.Property(t => t.Altitude_Topic).IsRequired();
+				entity.Property(t => t.AltitudeSensor_Topic).IsRequired();
+			});
+
+			// Настройка Data (каскад уже определен в SQL)
+			modelBuilder.Entity<Data>(entity =>
+			{
+				entity.HasKey(d => d.ID_Data);
+				entity.Property(d => d.Time_Data).IsRequired();
+				entity.HasOne(d => d.Topic)
+					  .WithMany(t => t.Data)
+					  .HasForeignKey(d => d.ID_Topic)
+					  .IsRequired();
+			});
+
+			// Настройка AreaPoint (каскад уже определен в SQL)
+			modelBuilder.Entity<AreaPoint>(entity =>
+			{
+				entity.HasKey(a => a.ID_AreaPoint);
+				entity.Property(a => a.Depression_AreaPoint).IsRequired();
+				entity.HasOne(a => a.Topic)
+					  .WithMany(t => t.AreaPoints)
+					  .HasForeignKey(a => a.ID_Topic)
+					  .IsRequired();
+			});
+		}
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\DataWork\Repositories\DatabaseRepository.cs
+using Microsoft.EntityFrameworkCore;
+using MQTT_API_sharp.Core.Entities;
+using MQTT_API_sharp.Core.Interfaces;
+
+namespace MQTT_API_sharp.DataWork.Repositories
+{
+	internal class DatabaseRepository : IDataRepository
+	{
+		private readonly IDbContextFactory<AppDbContext> _factory;
+
+		public DatabaseRepository(IDbContextFactory<AppDbContext> factory) => _factory = factory;
+
+		public async Task<User?> GetUserAsync(string login, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(u => u.Login_User == login, cancellationToken);
+		}
+
+		public async Task AddTopicAsync(Topic topic, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			await db.Topics.AddAsync(topic, cancellationToken);
+			await db.SaveChangesAsync(cancellationToken);
+		}
+
+		public async Task<int?> RemoveTopicAsync(int topicId, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Topics
+				.Where(t => t.ID_Topic == topicId)
+				.ExecuteDeleteAsync(cancellationToken);
+		}
+
+		public async Task<List<Topic>> GetTopicsAsync(CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Topics
+				.AsNoTracking()
+				.ToListAsync(cancellationToken);
+		}
+
+		public async Task<Topic?> GetTopicAsync(int topicId, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Topics
+				.AsNoTracking()
+				.FirstOrDefaultAsync(t => t.ID_Topic == topicId, cancellationToken);
+		}
+
+		public async Task<Topic?> GetTopicAsync(string path, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Topics
+				.AsNoTracking()
+				.FirstOrDefaultAsync(t => t.Path_Topic == path, cancellationToken);
+		}
+
+		public async Task<List<Data>> GetDataAsync(int topicId, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Data
+				.Where(d => d.ID_Topic == topicId)
+				.OrderByDescending(d => d.Time_Data)
+				.ToListAsync(cancellationToken);
+		}
+
+		public async Task<List<Data>> GetDataAsync(int topicId, int limit, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.Data
+				.Where(d => d.ID_Topic == topicId)
+				.OrderByDescending(d => d.Time_Data)
+				.Take(limit)
+				.ToListAsync(cancellationToken);
+		}
+
+		public async Task<AreaPoint?> GetAreaPointsAsync(int topicId, CancellationToken cancellationToken = default)
+		{
+			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+			return await db.AreaPoints
+				.AsNoTracking()
+				.FirstOrDefaultAsync(d => d.ID_Topic == topicId, cancellationToken);
+		}
+	}
+}
+
+
+C:\MainFolder\Yandex.Disk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\Properties\launchSettings.json
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:37373",
+      "sslPort": 44365
+    }
+  },
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5103",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7000;http://localhost:5103",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+

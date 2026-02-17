@@ -1,0 +1,12 @@
+.packignore
+pack.txt
+
+bin
+obj
+.log
+.idea
+.vs
+.git
+.github
+.gitignore
+LICENSE

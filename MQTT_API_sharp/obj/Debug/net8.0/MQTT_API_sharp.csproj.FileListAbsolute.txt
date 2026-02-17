@@ -1,0 +1,8 @@
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.csproj.AssemblyReference.cache
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.AssemblyInfoInputs.cache
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.AssemblyInfo.cs
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.csproj.CoreCompileInputs.cache
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kamil\YandexDisk\Files\uchob\UGNTU\4kurs\1sem\HMI\PROJECT\MQTT_API_sharp\MQTT_API_sharp\obj\Debug\net8.0\MQTT_API_sharp.MvcApplicationPartsAssemblyInfo.cache
