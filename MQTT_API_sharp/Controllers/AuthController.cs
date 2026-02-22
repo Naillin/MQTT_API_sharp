@@ -26,7 +26,7 @@ namespace MQTT_API_sharp.Controllers
 		{
 			// Если код дошел сюда, значит кука валидна (спасибо атрибуту [Authorize]).
 			// Данные пользователя берем из User (ClaimsPrincipal).
-    
+	
 			return Ok(new
 			{
 				IsAuthenticated = true,
@@ -42,7 +42,7 @@ namespace MQTT_API_sharp.Controllers
 				return BadRequest("Error in auth!");
 
 			User? user = await _dataRepository.GetUserAsync(loginModel.Login);
-    
+	
 			if (user == null)
 				return BadRequest("User is not found!");
 
