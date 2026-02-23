@@ -9,7 +9,7 @@ namespace MQTT_API_sharp.Controllers
 	[Route("api-mqtt/[controller]")]
 	[ApiController]
 	[Authorize]
-	internal class DataController : ControllerBase
+	public class DataController : ControllerBase
 	{
 		private readonly IDataRepository _dataRepository;
 

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MQTT_API_sharp.Core.Models
 {
-	internal class LoginDto
+	public class LoginDto
 	{
 		[Required(ErrorMessage = "Login is required")]
 		[JsonPropertyName("login_user")]

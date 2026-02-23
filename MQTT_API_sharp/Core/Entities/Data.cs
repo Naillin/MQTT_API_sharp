@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MQTT_API_sharp.Core.Entities
 {
 	[Table("data")]
-	internal class Data
+	public class Data
 	{
 		[Key]
 		[Column("id_data")]

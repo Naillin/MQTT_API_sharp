@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MQTT_API_sharp.Core.Entities
 {
 	[Table("area_points")]
-	internal class AreaPoint
+	public class AreaPoint
 	{
 		[Key]
 		[Column("id_areapoint")]

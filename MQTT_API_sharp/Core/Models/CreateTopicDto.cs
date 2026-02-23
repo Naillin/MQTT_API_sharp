@@ -2,7 +2,7 @@
 
 namespace MQTT_API_sharp.Core.Models
 {
-	internal class CreateTopicDto
+	public class CreateTopicDto
 	{
 		[MinLength(1)]
 		[Required]

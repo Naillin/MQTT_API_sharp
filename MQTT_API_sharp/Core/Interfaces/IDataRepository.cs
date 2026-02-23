@@ -3,7 +3,7 @@ using MQTT_API_sharp.Core.Entities;
 
 namespace MQTT_API_sharp.Core.Interfaces
 {
-	internal interface IDataRepository
+	public interface IDataRepository
 	{
 		Task<User?> GetUserAsync(string login, CancellationToken cancellationToken = default);
 
