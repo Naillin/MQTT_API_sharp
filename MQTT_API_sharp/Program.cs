@@ -16,6 +16,17 @@ namespace MQTT_API_sharp
 			// Add services to the container.
 			builder.Services.AddControllers();
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(policy =>
+				{
+					policy.SetIsOriginAllowed(origin => true) // WithOrigins("https://waterlevel-naillin.duckdns.org") // Убрать хардкод, получать домен из конфига
+						  .AllowAnyHeader()
+						  .AllowAnyMethod()
+						  .AllowCredentials();
+				});
+			});
+
 			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
 				{
@@ -57,7 +68,9 @@ namespace MQTT_API_sharp
 			{
 				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 			});
-			
+
+			app.UseCors();
+
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();

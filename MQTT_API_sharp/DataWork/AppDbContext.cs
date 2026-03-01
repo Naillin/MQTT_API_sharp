@@ -10,10 +10,7 @@ namespace MQTT_API_sharp.DataWork
 		public DbSet<Data> Data { get; set; }
 		public DbSet<AreaPoint> AreaPoints { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			optionsBuilder.UseNpgsql();
-		}
+		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
