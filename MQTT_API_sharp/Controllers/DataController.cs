@@ -11,11 +11,13 @@ namespace MQTT_API_sharp.Controllers
 	[Authorize]
 	public class DataController : ControllerBase
 	{
-		private readonly IDataRepository _dataRepository;
+		private readonly IDataService _dataService;
+		private readonly ILogger<IDataRepository> _logger;
 
-		public DataController(IDataRepository dataRepository, ILogger<DataController> logger)
+		public DataController(IDataService dataService, ILogger<IDataRepository> logger)
 		{
-			_dataRepository = dataRepository;
+			_dataService = dataService;
+			_logger = logger;
 		}
 
 		[HttpPost("topics/add")]
@@ -26,21 +28,8 @@ namespace MQTT_API_sharp.Controllers
 
 			try
 			{
-				// Маппим DTO в entity
-				var topic = new Topic
-				{
-					Name_Topic = topicDto.Name_Topic,
-					Path_Topic = topicDto.Path_Topic,
-					Latitude_Topic = topicDto.Latitude_Topic,
-					Longitude_Topic = topicDto.Longitude_Topic,
-					Altitude_Topic = topicDto.Altitude_Topic,
-					AltitudeSensor_Topic = topicDto.AltitudeSensor_Topic,
-					//CheckTime_Topic = DateTime.UtcNow.Ticks
-				};
-
-				await _dataRepository.AddTopicAsync(topic);
-
-				return CreatedAtAction(nameof(GetTopicAsync), new { id = topic.ID_Topic }, topic);
+				var result = await _dataService.AddTopicAsync(topicDto);
+				return CreatedAtAction(nameof(GetTopicAsync), new { id = result.ID_Topic }, result);
 			}
 			catch (Exception ex)
 			{
@@ -54,12 +43,12 @@ namespace MQTT_API_sharp.Controllers
 		{
 			try
 			{
-				var deletedCount = await _dataRepository.RemoveTopicAsync(topicId);
-
-				if (deletedCount == 0)
-					return NotFound($"Topic with ID {topicId} not found");
-
+				await _dataService.DeleteTopicAsync(topicId);
 				return NoContent();
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
 			}
 			catch (Exception ex)
 			{
@@ -73,7 +62,7 @@ namespace MQTT_API_sharp.Controllers
 		{
 			try
 			{
-				var topics = await _dataRepository.GetTopicsAsync();
+				var topics = await _dataService.GetTopicsAsync();
 				return Ok(topics);
 			}
 			catch (Exception ex)
@@ -86,17 +75,18 @@ namespace MQTT_API_sharp.Controllers
 		[HttpGet("topics/{topicId}")]
 		public async Task<IActionResult> GetTopicAsync(int topicId)
 		{
-			if (topicId <= 0)
-				return BadRequest("Valid topic ID is required");
-
 			try
 			{
-				var topic = await _dataRepository.GetTopicAsync(topicId);
-
-				if (topic == null)
-					return NotFound();
-
+				var topic = await _dataService.GetTopicAsync(topicId);
 				return Ok(topic);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
 			}
 			catch (Exception ex)
 			{
@@ -108,17 +98,18 @@ namespace MQTT_API_sharp.Controllers
 		[HttpGet("topics/formPath")]
 		public async Task<IActionResult> GetTopicAsync([FromQuery] string? path = null)
 		{
-			if (string.IsNullOrWhiteSpace(path))
-				return BadRequest("Valid topic path is required");
-
 			try
 			{
-				var topic = await _dataRepository.GetTopicAsync(path);
-
-				if (topic == null)
-					return NotFound();
-
+				var topic = await _dataService.GetTopicAsync(path);
 				return Ok(topic);
+			}
+			catch (ArgumentNullException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
 			}
 			catch (Exception ex)
 			{
@@ -130,21 +121,14 @@ namespace MQTT_API_sharp.Controllers
 		[HttpGet("topics/{topicId}/data")]
 		public async Task<IActionResult> GetTopicDataAsync(int topicId, [FromQuery] int? limit = null)
 		{
-			if (topicId <= 0)
-				return BadRequest("Valid topic ID is required");
-
 			try
 			{
-				List<Data> data;
-				if (limit.HasValue && limit > 0)
-					data = await _dataRepository.GetDataAsync(topicId, limit.Value);
-				else
-					data = await _dataRepository.GetDataAsync(topicId);
-
-				if (data == null || data.Count == 0)
-					return NotFound($"No data found for topic ID {topicId}");
-
+				var data = await _dataService.GetTopicDataAsync(topicId, limit);
 				return Ok(data);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				return BadRequest(ex.Message);
 			}
 			catch (Exception ex)
 			{
@@ -156,16 +140,14 @@ namespace MQTT_API_sharp.Controllers
 		[HttpGet("topics/{topicId}/points")]
 		public async Task<IActionResult> GetTopicPointsAsync(int topicId)
 		{
-			if (topicId <= 0)
-				return BadRequest("Valid topic ID is required");
-
 			try
 			{
-				AreaPoint? point = await _dataRepository.GetAreaPointsAsync(topicId);
-				if (point == null)
-					return NotFound($"No area points found for topic ID {topicId}");
-
-				return Ok(point.Depression_AreaPoint);
+				var points = await _dataService.GetTopicPointsAsync(topicId);
+				return Ok(points);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				return BadRequest(ex.Message);
 			}
 			catch (Exception ex)
 			{

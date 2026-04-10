@@ -14,10 +14,14 @@ namespace MQTT_API_sharp.Controllers
 	public class AuthController : ControllerBase
 	{
 		private readonly IDataRepository _dataRepository;
+		//private readonly IAuthService _authService;
+		private readonly ILogger<AuthController> _logger;
 
-		public AuthController(IDataRepository dataRepository, ILogger<AuthController> logger)
+		public AuthController(IDataRepository dataRepository, /*IAuthService authService,*/ ILogger<AuthController> logger)
 		{
 			_dataRepository = dataRepository;
+			//_authService = authService;
+			_logger = logger;
 		}
 
 		[Authorize]
@@ -31,13 +35,16 @@ namespace MQTT_API_sharp.Controllers
 			{
 				IsAuthenticated = true,
 				Login = User.Identity?.Name, // Login, который мы записали в ClaimTypes.Name
-				Id = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value // ID пользователя
+				Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value // ID пользователя
 			});
 		}
 
 		[HttpPost("login")]
 		public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginModel)
 		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+			
 			if (string.IsNullOrWhiteSpace(loginModel.Login) || string.IsNullOrWhiteSpace(loginModel.Password))
 				return BadRequest("Error in auth!");
 

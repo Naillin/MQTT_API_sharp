@@ -25,7 +25,7 @@ namespace MQTT_API_sharp.DataWork.Repositories
 			await db.SaveChangesAsync(cancellationToken);
 		}
 
-		public async Task<int?> RemoveTopicAsync(int topicId, CancellationToken cancellationToken = default)
+		public async Task<int> RemoveTopicAsync(int topicId, CancellationToken cancellationToken = default)
 		{
 			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
 			return await db.Topics
@@ -33,7 +33,7 @@ namespace MQTT_API_sharp.DataWork.Repositories
 				.ExecuteDeleteAsync(cancellationToken);
 		}
 
-		public async Task<List<Topic>> GetTopicsAsync(CancellationToken cancellationToken = default)
+		public async Task<IList<Topic>> GetTopicsAsync(CancellationToken cancellationToken = default)
 		{
 			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
 			return await db.Topics
@@ -57,7 +57,7 @@ namespace MQTT_API_sharp.DataWork.Repositories
 				.FirstOrDefaultAsync(t => t.Path_Topic == path, cancellationToken);
 		}
 
-		public async Task<List<Data>> GetDataAsync(int topicId, CancellationToken cancellationToken = default)
+		public async Task<IList<Data>> GetDataAsync(int topicId, CancellationToken cancellationToken = default)
 		{
 			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
 			return await db.Data
@@ -66,7 +66,7 @@ namespace MQTT_API_sharp.DataWork.Repositories
 				.ToListAsync(cancellationToken);
 		}
 
-		public async Task<List<Data>> GetDataAsync(int topicId, int limit, CancellationToken cancellationToken = default)
+		public async Task<IList<Data>> GetDataAsync(int topicId, int limit, CancellationToken cancellationToken = default)
 		{
 			await using var db = await _factory.CreateDbContextAsync(cancellationToken);
 			return await db.Data
