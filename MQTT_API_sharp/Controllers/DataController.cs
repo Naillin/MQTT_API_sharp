@@ -21,7 +21,7 @@ namespace MQTT_API_sharp.Controllers
 		}
 
 		[HttpPost("topics/add")]
-		public async Task<IActionResult> AddTopicAsync([FromBody] CreateTopicDto topicDto)
+		public async Task<IActionResult> AddTopicAsync([FromBody] TopicDto topicDto)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);

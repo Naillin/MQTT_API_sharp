@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using MQTT_API_sharp.Core.Interfaces;
 using MQTT_API_sharp.DataWork;
 using MQTT_API_sharp.DataWork.Repositories;
+using MQTT_API_sharp.Services;
 
 namespace MQTT_API_sharp
 {
@@ -60,8 +61,12 @@ namespace MQTT_API_sharp
 			{
 				optionsAction.UseNpgsql(repoSection["ConnectionString"]); 
 			});
+			
+			//----------------------------------------------------------------------
 			builder.Services.AddScoped<IDataRepository, DatabaseRepository>();
-
+			builder.Services.AddScoped<IDataService, DataService>();
+			//----------------------------------------------------------------------
+			
 			var app = builder.Build();
 			
 			app.UseForwardedHeaders(new ForwardedHeadersOptions

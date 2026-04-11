@@ -5,17 +5,17 @@ namespace MQTT_API_sharp.Core.Interfaces;
 
 public interface IDataService
 {
-    public Task<Topic> AddTopicAsync(CreateTopicDto topicDto);
+    public Task<Topic> AddTopicAsync(TopicDto topicDto);
 
     public Task<int> DeleteTopicAsync(int topicId);
     
-    public Task<IList<Topic>> GetTopicsAsync();
+    public Task<IList<TopicDto>> GetTopicsAsync();
 
-    public Task<Topic?> GetTopicAsync(int topicId);
+    public Task<TopicDto?> GetTopicAsync(int topicId);
 
-    public Task<Topic?> GetTopicAsync(string? path = null);
+    public Task<TopicDto?> GetTopicAsync(string? path = null);
 
-    public Task<IList<Data>> GetTopicDataAsync(int topicId, int? limit = null);
+    public Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null);
 
     public Task<string> GetTopicPointsAsync(int topicId);
 }

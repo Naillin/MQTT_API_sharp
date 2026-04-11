@@ -15,8 +15,10 @@ public class DataService : IDataService
         _logger = logger;
     }
 
-    public async Task<Topic> AddTopicAsync(CreateTopicDto topicDto)
+    public async Task<Topic> AddTopicAsync(TopicDto topicDto)
     {
+        _logger.LogDebug($"Adding topic with path: {topicDto.Path_Topic}");
+        
         // Маппим DTO в entity
         var topic = new Topic
         {
@@ -36,6 +38,10 @@ public class DataService : IDataService
 
     public async Task<int> DeleteTopicAsync(int topicId)
     {
+        _logger.LogDebug($"Remove topic with id: {topicId}");
+        
+        TopicIdOutOfRangeCheck(topicId);
+        
         var deletedCount = await _dataRepository.RemoveTopicAsync(topicId);
         
         if (deletedCount == 0)
@@ -44,10 +50,21 @@ public class DataService : IDataService
         return deletedCount;
     }
 
-    public async Task<IList<Topic>> GetTopicsAsync() => await _dataRepository.GetTopicsAsync();
+    public async Task<IList<TopicDto>> GetTopicsAsync() => (await _dataRepository.GetTopicsAsync())
+        .Select(topic => new TopicDto
+        {
+            Name_Topic = topic.Name_Topic,
+            Path_Topic = topic.Path_Topic,
+            Latitude_Topic = topic.Latitude_Topic,
+            Longitude_Topic = topic.Longitude_Topic,
+            Altitude_Topic = topic.Altitude_Topic,
+            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
+        }).ToList();
 
-    public async Task<Topic?> GetTopicAsync(int topicId)
+    public async Task<TopicDto?> GetTopicAsync(int topicId)
     {
+        _logger.LogDebug($"Getting topic with id: {topicId}");
+        
         TopicIdOutOfRangeCheck(topicId);
 
         var topic = await _dataRepository.GetTopicAsync(topicId);
@@ -55,11 +72,21 @@ public class DataService : IDataService
         if (topic == null)
             throw new KeyNotFoundException($"Topic with ID {topicId} not found");
 
-        return topic;
+        return new()
+        {
+            Name_Topic = topic.Name_Topic,
+            Path_Topic = topic.Path_Topic,
+            Latitude_Topic = topic.Latitude_Topic,
+            Longitude_Topic = topic.Longitude_Topic,
+            Altitude_Topic = topic.Altitude_Topic,
+            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
+        };
     }
     
-    public async Task<Topic?> GetTopicAsync(string? path = null)
+    public async Task<TopicDto?> GetTopicAsync(string? path = null)
     {
+        _logger.LogDebug($"Getting topic with path: {path}");
+        
         if (string.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException(nameof(path), "Valid topic path is required");
 
@@ -68,25 +95,41 @@ public class DataService : IDataService
         if (topic == null)
             throw new KeyNotFoundException($"Topic with topic path {path} not found");
 
-        return topic;
+        return new()
+        {
+            Name_Topic = topic.Name_Topic,
+            Path_Topic = topic.Path_Topic,
+            Latitude_Topic = topic.Latitude_Topic,
+            Longitude_Topic = topic.Longitude_Topic,
+            Altitude_Topic = topic.Altitude_Topic,
+            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
+        };
     }
 
-    public async Task<IList<Data>> GetTopicDataAsync(int topicId, int? limit = null)
+    public async Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null)
     {
+        _logger.LogDebug($"Getting topic data with id: {topicId}; And limit: {limit ?? -1}");
+        
         TopicIdOutOfRangeCheck(topicId);
         
-        IList<Data> data = limit.HasValue && limit > 0
+        IList<Data> dataPack = limit.HasValue && limit > 0
                 ? await _dataRepository.GetDataAsync(topicId, limit.Value)
                 : await _dataRepository.GetDataAsync(topicId);
 
-        if (data == null || data.Count == 0)
-            return new List<Data>();
+        if (dataPack.Count == 0)
+            return new List<DataDto>();
         
-        return data;
+        return dataPack.Select(data => new DataDto
+        {
+            Value_Data = data.Value_Data,
+            Time_Data = data.Time_Data
+        }).ToList();
     }
 
     public async Task<string> GetTopicPointsAsync(int topicId)
     {
+        _logger.LogDebug($"Getting topic area points with id: {topicId}");
+        
         TopicIdOutOfRangeCheck(topicId);
         
         AreaPoint? point = await _dataRepository.GetAreaPointsAsync(topicId);
