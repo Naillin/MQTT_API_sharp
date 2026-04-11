@@ -31,7 +31,7 @@ namespace MQTT_API_sharp
 			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
 				{
-					options.Cookie.Name = "MqttApiSession"; // Имя вашей куки
+					options.Cookie.Name = "WaterlevelSystemSession"; // Имя вашей куки
 					options.ExpireTimeSpan = TimeSpan.FromDays(1); // Время жизни сессии
 					options.SlidingExpiration = true; // Продлевать сессию при активности
 		
@@ -64,6 +64,7 @@ namespace MQTT_API_sharp
 			
 			//----------------------------------------------------------------------
 			builder.Services.AddScoped<IDataRepository, DatabaseRepository>();
+			builder.Services.AddScoped<IAuthService, AuthService>();
 			builder.Services.AddScoped<IDataService, DataService>();
 			//----------------------------------------------------------------------
 			

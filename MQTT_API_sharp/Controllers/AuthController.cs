@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MQTT_API_sharp.Core.Entities;
+using MQTT_API_sharp.Core.Exceptions;
 using MQTT_API_sharp.Core.Interfaces;
 using MQTT_API_sharp.Core.Models;
 
@@ -13,14 +14,12 @@ namespace MQTT_API_sharp.Controllers
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
-		private readonly IDataRepository _dataRepository;
-		//private readonly IAuthService _authService;
+		private readonly IAuthService _authService;
 		private readonly ILogger<AuthController> _logger;
 
-		public AuthController(IDataRepository dataRepository, /*IAuthService authService,*/ ILogger<AuthController> logger)
+		public AuthController(IAuthService authService, ILogger<AuthController> logger)
 		{
-			_dataRepository = dataRepository;
-			//_authService = authService;
+			_authService = authService;
 			_logger = logger;
 		}
 
@@ -34,7 +33,7 @@ namespace MQTT_API_sharp.Controllers
 			return Ok(new
 			{
 				IsAuthenticated = true,
-				Login = User.Identity?.Name, // Login, который мы записали в ClaimTypes.Name
+				Login = User.Identity?.Name, // Login, который записали в ClaimTypes.Name
 				Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value // ID пользователя
 			});
 		}
@@ -45,40 +44,37 @@ namespace MQTT_API_sharp.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest(ModelState);
 			
-			if (string.IsNullOrWhiteSpace(loginModel.Login) || string.IsNullOrWhiteSpace(loginModel.Password))
-				return BadRequest("Error in auth!");
-
-			User? user = await _dataRepository.GetUserAsync(loginModel.Login);
-	
-			if (user == null)
-				return BadRequest("User is not found!");
-
-			// Внимание: хранить пароли в открытом виде небезопасно, 
-			// но оставляю логику сравнения как у вас в оригинале
-			if (user.Password_User != loginModel.Password)
-				return BadRequest("Wrong password!");
-
-			// === СОЗДАНИЕ СЕССИИ (COOKIE) ===
-			var claims = new List<Claim>
+			try
 			{
-				new Claim(ClaimTypes.Name, user.Login_User),
-				new Claim(ClaimTypes.NameIdentifier, user.ID_User.ToString())
-				// Можно добавить роль, если есть: new Claim(ClaimTypes.Role, "Admin")
-			};
+				var claims = await _authService.LoginAsync(loginModel);
+				
+				var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+				var authProperties = new AuthenticationProperties
+				{
+					IsPersistent = true, // Сохранять куку после закрытия браузера
+					AllowRefresh = true
+				};
 
-			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-			var authProperties = new AuthenticationProperties
+				await HttpContext.SignInAsync(
+					CookieAuthenticationDefaults.AuthenticationScheme,
+					new ClaimsPrincipal(claimsIdentity),
+					authProperties);
+
+				return Ok(new { message = "Logged in successfully" });
+			}
+			catch (ArgumentException ex)
 			{
-				IsPersistent = true, // Сохранять куку после закрытия браузера
-				AllowRefresh = true
-			};
-
-			await HttpContext.SignInAsync(
-				CookieAuthenticationDefaults.AuthenticationScheme,
-				new ClaimsPrincipal(claimsIdentity),
-				authProperties);
-
-			return Ok(new { message = "Logged in successfully" });
+				return BadRequest(ex.Message);
+			}
+			catch (AuthException ex)
+			{
+				return Unauthorized(new { message = ex.Message });
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error getting topic");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
 		}
 
 		[Authorize]
