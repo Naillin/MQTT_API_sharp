@@ -11,9 +11,9 @@ public interface IDataService
     
     public Task<IList<TopicDto>> GetTopicsAsync();
 
-    public Task<TopicDto?> GetTopicAsync(int topicId);
-
     public Task<TopicDto?> GetTopicAsync(string? path = null);
+    
+    public Task<TopicDto?> GetTopicAsync(int topicId);
 
     public Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null);
 

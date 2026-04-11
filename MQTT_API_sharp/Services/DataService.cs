@@ -7,9 +7,9 @@ namespace MQTT_API_sharp.Services;
 public class DataService : IDataService
 {
     private readonly IDataRepository _dataRepository;
-    private readonly ILogger<DataService> _logger;
+    private readonly ILogger<IDataService> _logger;
     
-    public DataService(IDataRepository dataRepository, ILogger<DataService> logger)
+    public DataService(IDataRepository dataRepository, ILogger<IDataService> logger)
     {
         _dataRepository = dataRepository;
         _logger = logger;
@@ -60,7 +60,30 @@ public class DataService : IDataService
             Altitude_Topic = topic.Altitude_Topic,
             AltitudeSensor_Topic = topic.AltitudeSensor_Topic
         }).ToList();
+    
+    public async Task<TopicDto?> GetTopicAsync(string? path = null)
+    {
+        _logger.LogDebug($"Getting topic with path: {path}");
+        
+        if (string.IsNullOrWhiteSpace(path))
+            throw new ArgumentException(nameof(path), "Valid topic path is required");
 
+        var topic = await _dataRepository.GetTopicAsync(path);
+
+        if (topic == null)
+            throw new KeyNotFoundException($"Topic with topic path {path} not found");
+
+        return new()
+        {
+            Name_Topic = topic.Name_Topic,
+            Path_Topic = topic.Path_Topic,
+            Latitude_Topic = topic.Latitude_Topic,
+            Longitude_Topic = topic.Longitude_Topic,
+            Altitude_Topic = topic.Altitude_Topic,
+            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
+        };
+    }
+    
     public async Task<TopicDto?> GetTopicAsync(int topicId)
     {
         _logger.LogDebug($"Getting topic with id: {topicId}");
@@ -83,29 +106,6 @@ public class DataService : IDataService
         };
     }
     
-    public async Task<TopicDto?> GetTopicAsync(string? path = null)
-    {
-        _logger.LogDebug($"Getting topic with path: {path}");
-        
-        if (string.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException(nameof(path), "Valid topic path is required");
-
-        var topic = await _dataRepository.GetTopicAsync(path);
-
-        if (topic == null)
-            throw new KeyNotFoundException($"Topic with topic path {path} not found");
-
-        return new()
-        {
-            Name_Topic = topic.Name_Topic,
-            Path_Topic = topic.Path_Topic,
-            Latitude_Topic = topic.Latitude_Topic,
-            Longitude_Topic = topic.Longitude_Topic,
-            Altitude_Topic = topic.Altitude_Topic,
-            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
-        };
-    }
-
     public async Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null)
     {
         _logger.LogDebug($"Getting topic data with id: {topicId}; And limit: {limit ?? -1}");

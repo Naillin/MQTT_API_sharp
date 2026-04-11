@@ -27,8 +27,8 @@ namespace MQTT_API_sharp.Controllers
 
 			try
 			{
-				var result = await _dataService.AddTopicAsync(topicDto);
-				return CreatedAtAction(nameof(GetTopicAsync), new { id = result.ID_Topic }, result);
+				var topic = await _dataService.AddTopicAsync(topicDto);
+				return CreatedAtAction(nameof(GetTopicAsync), new { id = topic.ID_Topic }, topic);
 			}
 			catch (Exception ex)
 			{
@@ -79,7 +79,7 @@ namespace MQTT_API_sharp.Controllers
 				var topic = await _dataService.GetTopicAsync(path);
 				return Ok(topic);
 			}
-			catch (ArgumentNullException ex)
+			catch (ArgumentException ex)
 			{
 				return BadRequest(ex.Message);
 			}
