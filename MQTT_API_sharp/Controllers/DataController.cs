@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MQTT_API_sharp.Core.Entities;
 using MQTT_API_sharp.Core.Interfaces;
 using MQTT_API_sharp.Core.Models;
 
@@ -12,9 +11,9 @@ namespace MQTT_API_sharp.Controllers
 	public class DataController : ControllerBase
 	{
 		private readonly IDataService _dataService;
-		private readonly ILogger<IDataRepository> _logger;
+		private readonly ILogger<DataController> _logger;
 
-		public DataController(IDataService dataService, ILogger<IDataRepository> logger)
+		public DataController(IDataService dataService, ILogger<DataController> logger)
 		{
 			_dataService = dataService;
 			_logger = logger;
@@ -33,8 +32,8 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error adding topic");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error adding topic");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 
@@ -52,8 +51,8 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error deleting topic");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error deleting topic");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 
@@ -67,34 +66,11 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error getting topics");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error getting topics");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 
-		[HttpGet("topics/{topicId}")]
-		public async Task<IActionResult> GetTopicAsync(int topicId)
-		{
-			try
-			{
-				var topic = await _dataService.GetTopicAsync(topicId);
-				return Ok(topic);
-			}
-			catch (ArgumentOutOfRangeException ex)
-			{
-				return BadRequest(ex.Message);
-			}
-			catch (KeyNotFoundException ex)
-			{
-				return NotFound(ex.Message);
-			}
-			catch (Exception ex)
-			{
-				//_logger.LogError(ex, "Error getting topic");
-				return StatusCode(500, "Internal server error");
-			}
-		}
-		
 		[HttpGet("topics/formPath")]
 		public async Task<IActionResult> GetTopicAsync([FromQuery] string? path = null)
 		{
@@ -113,8 +89,31 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error getting topic");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error getting topic");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
+		}
+		
+		[HttpGet("topics/{topicId}")]
+		public async Task<IActionResult> GetTopicAsync(int topicId)
+		{
+			try
+			{
+				var topic = await _dataService.GetTopicAsync(topicId);
+				return Ok(topic);
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				return BadRequest(ex.Message);
+			}
+			catch (KeyNotFoundException ex)
+			{
+				return NotFound(ex.Message);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error getting topic");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 
@@ -132,8 +131,8 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error getting topic data");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error getting topic data");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 
@@ -151,8 +150,8 @@ namespace MQTT_API_sharp.Controllers
 			}
 			catch (Exception ex)
 			{
-				//_logger.LogError(ex, "Error getting area points");
-				return StatusCode(500, "Internal server error");
+				_logger.LogError(ex, "Error getting area points");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
 	}
