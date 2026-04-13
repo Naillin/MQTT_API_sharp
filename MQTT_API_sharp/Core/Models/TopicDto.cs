@@ -5,6 +5,10 @@ namespace MQTT_API_sharp.Core.Models
 {
 	public class TopicDto
 	{
+		[Required]
+		[JsonPropertyName("id_topic")]
+		public int ID_Topic { get; set; }
+		
 		[MinLength(1)]
 		[Required]
 		[JsonPropertyName("name_topic")]

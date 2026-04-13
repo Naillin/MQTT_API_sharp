@@ -5,7 +5,7 @@ namespace MQTT_API_sharp.Core.Interfaces;
 
 public interface IDataService
 {
-    public Task<Topic> AddTopicAsync(TopicDto topicDto);
+    public Task<Topic> AddTopicAsync(CreateTopicDto topicDto);
 
     public Task<int> DeleteTopicAsync(int topicId);
     

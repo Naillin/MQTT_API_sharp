@@ -15,7 +15,7 @@ public class DataService : IDataService
         _logger = logger;
     }
 
-    public async Task<Topic> AddTopicAsync(TopicDto topicDto)
+    public async Task<Topic> AddTopicAsync(CreateTopicDto topicDto)
     {
         _logger.LogDebug($"Adding topic with path: {topicDto.Path_Topic}");
         
@@ -53,6 +53,7 @@ public class DataService : IDataService
     public async Task<IList<TopicDto>> GetTopicsAsync() => (await _dataRepository.GetTopicsAsync())
         .Select(topic => new TopicDto
         {
+            ID_Topic =  topic.ID_Topic,
             Name_Topic = topic.Name_Topic,
             Path_Topic = topic.Path_Topic,
             Latitude_Topic = topic.Latitude_Topic,
@@ -75,6 +76,7 @@ public class DataService : IDataService
 
         return new()
         {
+            ID_Topic =  topic.ID_Topic,
             Name_Topic = topic.Name_Topic,
             Path_Topic = topic.Path_Topic,
             Latitude_Topic = topic.Latitude_Topic,
@@ -97,6 +99,7 @@ public class DataService : IDataService
 
         return new()
         {
+            ID_Topic =  topic.ID_Topic,
             Name_Topic = topic.Name_Topic,
             Path_Topic = topic.Path_Topic,
             Latitude_Topic = topic.Latitude_Topic,
@@ -121,6 +124,7 @@ public class DataService : IDataService
         
         return dataPack.Select(data => new DataDto
         {
+            ID_Data =  data.ID_Data,
             Value_Data = data.Value_Data,
             Time_Data = data.Time_Data
         }).ToList();
