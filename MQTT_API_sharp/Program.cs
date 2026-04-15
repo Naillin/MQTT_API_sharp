@@ -21,7 +21,7 @@ namespace MQTT_API_sharp
 			{
 				options.AddDefaultPolicy(policy =>
 				{
-					policy.SetIsOriginAllowed(origin => true) // WithOrigins("https://waterlevel-naillin.duckdns.org") // Убрать хардкод, получать домен из конфига
+					policy.SetIsOriginAllowed(origin => true) // WithOrigins("https://waterlevel-naillin.duckdns.org") //todo: Убрать хардкод, получать домен из конфига
 						  .AllowAnyHeader()
 						  .AllowAnyMethod()
 						  .AllowCredentials();
