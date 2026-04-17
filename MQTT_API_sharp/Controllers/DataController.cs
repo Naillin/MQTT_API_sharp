@@ -28,7 +28,7 @@ namespace MQTT_API_sharp.Controllers
 			try
 			{
 				var topic = await _dataService.AddTopicAsync(topicDto);
-				return CreatedAtAction(nameof(GetTopicAsync), new { id = topic.ID_Topic }, topic);
+				return CreatedAtRoute("GetTopicById", new { topicId = topic.ID_Topic }, topic);
 			}
 			catch (Exception ex)
 			{
@@ -71,7 +71,7 @@ namespace MQTT_API_sharp.Controllers
 			}
 		}
 
-		[HttpGet("topics/formPath")]
+		[HttpGet("topics/fromPath")]
 		public async Task<IActionResult> GetTopicAsync([FromQuery] string? path = null)
 		{
 			try
@@ -94,7 +94,7 @@ namespace MQTT_API_sharp.Controllers
 			}
 		}
 		
-		[HttpGet("topics/{topicId}")]
+		[HttpGet("topics/{topicId}", Name = "GetTopicById")]
 		public async Task<IActionResult> GetTopicAsync(int topicId)
 		{
 			try

@@ -20,7 +20,7 @@ namespace MQTT_API_sharp.Core.Entities
 
 		[Required]
 		[Column("time_data")]
-		public long Time_Data { get; set; }
+		public DateTimeOffset Time_Data { get; set; }
 
 		//-------------------------------------------------------------
 

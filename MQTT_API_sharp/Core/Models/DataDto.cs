@@ -15,5 +15,5 @@ public class DataDto
 
     [Required(ErrorMessage = "Time is required")]
     [JsonPropertyName("time_data")]
-    public long Time_Data { get; set; }
+    public DateTimeOffset Time_Data { get; set; }
 }
