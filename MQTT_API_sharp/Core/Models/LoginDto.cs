@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace MQTT_API_sharp.Core.Models
-{
-	public class LoginDto
-	{
-		[MinLength(5)]
-		[Required(ErrorMessage = "Login is required")]
-		[JsonPropertyName("login_user")]
-		public string? Login { get; set; }
+namespace MQTT_API_sharp.Core.Models;
 
-		[MinLength(5)]
-		[Required(ErrorMessage = "Password is required")]
-		[JsonPropertyName("password_user")]
-		public string? Password { get; set; }
-	}
+public class LoginDto
+{
+	[MinLength(5)]
+	[Required(ErrorMessage = "Login is required")]
+	[JsonPropertyName("login_user")]
+	public string? Login { get; set; }
+
+	[MinLength(5)]
+	[Required(ErrorMessage = "Password is required")]
+	[JsonPropertyName("password_user")]
+	public string? Password { get; set; }
 }

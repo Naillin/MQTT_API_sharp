@@ -1,5 +1,5 @@
-﻿using MQTT_API_sharp.Core.Entities;
-using MQTT_API_sharp.Core.Models;
+﻿using MQTT_API_sharp.Core.Models;
+using WaterlevelSystem_DataBaseStructure.Entities;
 
 namespace MQTT_API_sharp.Core.Interfaces;
 
