@@ -20,5 +20,11 @@ public interface IDataRepository
 
 	Task<IList<Data>> GetDataAsync(int topicId, int limit, CancellationToken cancellationToken = default);
 
+	Task<IList<Ema>> GetEmaAsync(int topicId, CancellationToken cancellationToken = default);
+
+	Task<IList<Ema>> GetEmaAsync(int topicId, int limit, CancellationToken cancellationToken = default);
+
+	Task<IList<Prediction>> GetPredictionsAsync(int topicId, CancellationToken cancellationToken = default);
+
 	Task<AreaPoint?> GetAreaPointsAsync(int topicId, CancellationToken cancellationToken = default);
 }

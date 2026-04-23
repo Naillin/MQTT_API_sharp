@@ -31,7 +31,7 @@ public class Program
 		builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			.AddCookie(options =>
 			{
-				options.Cookie.Name = "WaterlevelSystemSession"; // Имя вашей куки
+				options.Cookie.Name = "WaterlevelSystemSession"; // Имя куки
 				options.ExpireTimeSpan = TimeSpan.FromDays(1); // Время жизни сессии
 				options.SlidingExpiration = true; // Продлевать сессию при активности
 		

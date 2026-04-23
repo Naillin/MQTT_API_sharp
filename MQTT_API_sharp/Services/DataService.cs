@@ -15,11 +15,10 @@ public class DataService : IDataService
         _logger = logger;
     }
 
-    public async Task<Topic> AddTopicAsync(CreateTopicDto topicDto)
+    public async Task<TopicDto> AddTopicAsync(CreateTopicDto topicDto)
     {
         _logger.LogDebug($"Adding topic with path: {topicDto.Path_Topic}");
-        
-        // Маппим DTO в entity
+
         var topic = new Topic
         {
             Name_Topic = topicDto.Name_Topic,
@@ -33,7 +32,16 @@ public class DataService : IDataService
 
         await _dataRepository.AddTopicAsync(topic);
         
-        return topic;
+        return new TopicDto
+        {
+            ID_Topic = topic.ID_Topic,
+            Name_Topic = topic.Name_Topic,
+            Path_Topic = topic.Path_Topic,
+            Latitude_Topic = topic.Latitude_Topic,
+            Longitude_Topic = topic.Longitude_Topic,
+            Altitude_Topic = topic.Altitude_Topic,
+            AltitudeSensor_Topic = topic.AltitudeSensor_Topic
+        };
     }
 
     public async Task<int> DeleteTopicAsync(int topicId)
@@ -127,6 +135,46 @@ public class DataService : IDataService
             ID_Data =  data.ID_Data,
             Value_Data = data.Value_Data,
             Time_Data = data.Time_Data
+        }).ToList();
+    }
+
+    public async Task<IList<EmaDto>> GetTopicEmaAsync(int topicId, int? limit = null)
+    {
+        _logger.LogDebug($"Getting topic ema with id: {topicId}; And limit: {limit ?? -1}");
+        
+        TopicIdOutOfRangeCheck(topicId);
+        
+        IList<Ema> emaPack = limit.HasValue && limit > 0
+            ? await _dataRepository.GetEmaAsync(topicId, limit.Value)
+            : await _dataRepository.GetEmaAsync(topicId);
+
+        if (emaPack.Count == 0)
+            return new List<EmaDto>();
+        
+        return emaPack.Select(ema => new EmaDto
+        {
+            ID_Ema = ema.ID_Ema,
+            Value_Ema = ema.Value_Ema,
+            Time_Ema = ema.Time_Ema
+        }).ToList();
+    }
+
+    public async Task<IList<PredictionDto>> GetTopicPredictionAsync(int topicId)
+    {
+        _logger.LogDebug($"Getting topic prediction with id: {topicId}");
+        
+        TopicIdOutOfRangeCheck(topicId);
+        
+        IList<Prediction> predictionPack = await _dataRepository.GetPredictionsAsync(topicId);
+
+        if (predictionPack.Count == 0)
+            return new List<PredictionDto>();
+        
+        return predictionPack.Select(prediction => new PredictionDto
+        {
+            ID_Prediction = prediction.ID_Prediction,
+            Value_Prediction = prediction.Value_Prediction,
+            Time_Prediction = prediction.Time_Prediction
         }).ToList();
     }
 

@@ -135,6 +135,44 @@ public class DataController : ControllerBase
 			return StatusCode(500, $"Internal server error: {ex.Message}");
 		}
 	}
+	
+	[HttpGet("topics/{topicId}/ema")]
+	public async Task<IActionResult> GetTopicEmaAsync(int topicId, [FromQuery] int? limit = null)
+	{
+		try
+		{
+			var data = await _dataService.GetTopicEmaAsync(topicId, limit);
+			return Ok(data);
+		}
+		catch (ArgumentOutOfRangeException ex)
+		{
+			return BadRequest(ex.Message);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error getting topic ema");
+			return StatusCode(500, $"Internal server error: {ex.Message}");
+		}
+	}
+	
+	[HttpGet("topics/{topicId}/prediction")]
+	public async Task<IActionResult> GetTopicPredictionAsync(int topicId)
+	{
+		try
+		{
+			var data = await _dataService.GetTopicPredictionAsync(topicId);
+			return Ok(data);
+		}
+		catch (ArgumentOutOfRangeException ex)
+		{
+			return BadRequest(ex.Message);
+		}
+		catch (Exception ex)
+		{
+			_logger.LogError(ex, "Error getting topic prediction");
+			return StatusCode(500, $"Internal server error: {ex.Message}");
+		}
+	}
 
 	[HttpGet("topics/{topicId}/points")]
 	public async Task<IActionResult> GetTopicPointsAsync(int topicId)

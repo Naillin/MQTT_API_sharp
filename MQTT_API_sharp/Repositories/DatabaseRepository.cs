@@ -76,6 +76,34 @@ internal class DatabaseRepository : IDataRepository
 			.Take(limit)
 			.ToListAsync(cancellationToken);
 	}
+	
+	public async Task<IList<Ema>> GetEmaAsync(int topicId, CancellationToken cancellationToken = default)
+	{
+		await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+		return await db.Ema
+			.Where(d => d.ID_Topic == topicId)
+			.OrderBy(d => d.Time_Ema)
+			.ToListAsync(cancellationToken);
+	}
+
+	public async Task<IList<Ema>> GetEmaAsync(int topicId, int limit, CancellationToken cancellationToken = default)
+	{
+		await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+		return await db.Ema
+			.Where(d => d.ID_Topic == topicId)
+			.OrderBy(d => d.Time_Ema)
+			.Take(limit)
+			.ToListAsync(cancellationToken);
+	}
+
+	public async Task<IList<Prediction>> GetPredictionsAsync(int topicId, CancellationToken cancellationToken = default)
+	{
+		await using var db = await _factory.CreateDbContextAsync(cancellationToken);
+		return await db.Prediction
+			.Where(d => d.ID_Topic == topicId)
+			.OrderBy(d => d.Time_Prediction)
+			.ToListAsync(cancellationToken);
+	}
 
 	public async Task<AreaPoint?> GetAreaPointsAsync(int topicId, CancellationToken cancellationToken = default)
 	{

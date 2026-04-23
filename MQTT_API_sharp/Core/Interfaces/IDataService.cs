@@ -1,21 +1,24 @@
 ﻿using MQTT_API_sharp.Core.Models;
-using WaterlevelSystem_DataBaseStructure.Entities;
 
 namespace MQTT_API_sharp.Core.Interfaces;
 
 public interface IDataService
 {
-    public Task<Topic> AddTopicAsync(CreateTopicDto topicDto);
+    Task<TopicDto> AddTopicAsync(CreateTopicDto topicDto);
 
-    public Task<int> DeleteTopicAsync(int topicId);
+    Task<int> DeleteTopicAsync(int topicId);
     
-    public Task<IList<TopicDto>> GetTopicsAsync();
+    Task<IList<TopicDto>> GetTopicsAsync();
 
-    public Task<TopicDto?> GetTopicAsync(string? path = null);
+    Task<TopicDto?> GetTopicAsync(string? path = null);
     
-    public Task<TopicDto?> GetTopicAsync(int topicId);
+    Task<TopicDto?> GetTopicAsync(int topicId);
 
-    public Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null);
+    Task<IList<DataDto>> GetTopicDataAsync(int topicId, int? limit = null);
+    
+    Task<IList<EmaDto>> GetTopicEmaAsync(int topicId, int? limit = null);
+    
+    Task<IList<PredictionDto>> GetTopicPredictionAsync(int topicId);
 
-    public Task<string> GetTopicPointsAsync(int topicId);
+    Task<string> GetTopicPointsAsync(int topicId);
 }
