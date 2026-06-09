@@ -6,10 +6,14 @@ EXPOSE 8055
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MQTT_API_sharp/MQTT_API_sharp.csproj", "MQTT_API_sharp/"]
-RUN dotnet restore "MQTT_API_sharp/MQTT_API_sharp.csproj"
-COPY . .
-WORKDIR "/src/MQTT_API_sharp"
+COPY ["MQTT_API_sharp/MQTT_API_sharp/MQTT_API_sharp.csproj", "MQTT_API_sharp/MQTT_API_sharp/"]
+COPY ["WaterlevelSystem_DataBaseStructure/WaterlevelSystem_DataBaseStructure/WaterlevelSystem_DataBaseStructure.csproj", "WaterlevelSystem_DataBaseStructure/WaterlevelSystem_DataBaseStructure/"]
+
+RUN dotnet restore "MQTT_API_sharp/MQTT_API_sharp/MQTT_API_sharp.csproj"
+
+COPY MQTT_API_sharp/ ./MQTT_API_sharp/
+COPY WaterlevelSystem_DataBaseStructure/ ./WaterlevelSystem_DataBaseStructure/
+WORKDIR "/src/MQTT_API_sharp/MQTT_API_sharp"
 RUN dotnet build "./MQTT_API_sharp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
