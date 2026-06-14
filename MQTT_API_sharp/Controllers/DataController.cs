@@ -25,171 +25,63 @@ public class DataController : ControllerBase
 		if (!ModelState.IsValid)
 			return BadRequest(ModelState);
 
-		try
-		{
-			var topic = await _dataService.AddTopicAsync(topicDto);
-			return CreatedAtRoute("GetTopicById", new { topicId = topic.ID_Topic }, topic);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error adding topic");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var topic = await _dataService.AddTopicAsync(topicDto);
+		return CreatedAtRoute("GetTopicById", new { topicId = topic.ID_Topic }, topic);
 	}
 
 	[HttpDelete("topics/{topicId}")]
 	public async Task<IActionResult> DeleteTopicAsync(int topicId)
 	{
-		try
-		{
-			await _dataService.DeleteTopicAsync(topicId);
-			return NoContent();
-		}
-		catch (KeyNotFoundException ex)
-		{
-			return NotFound(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error deleting topic");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		await _dataService.DeleteTopicAsync(topicId);
+		return NoContent();
 	}
 
 	[HttpGet("topics")]
 	public async Task<IActionResult> GetTopicsAsync()
 	{
-		try
-		{
-			var topics = await _dataService.GetTopicsAsync();
-			return Ok(topics);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topics");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var topics = await _dataService.GetTopicsAsync();
+		return Ok(topics);
 	}
 
 	[HttpGet("topics/fromPath")]
 	public async Task<IActionResult> GetTopicAsync([FromQuery] string? path = null)
 	{
-		try
-		{
-			var topic = await _dataService.GetTopicAsync(path);
-			return Ok(topic);
-		}
-		catch (ArgumentException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (KeyNotFoundException ex)
-		{
-			return NotFound(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var topic = await _dataService.GetTopicAsync(path);
+		return Ok(topic);
 	}
 		
 	[HttpGet("topics/{topicId}", Name = "GetTopicById")]
 	public async Task<IActionResult> GetTopicAsync(int topicId)
 	{
-		try
-		{
-			var topic = await _dataService.GetTopicAsync(topicId);
-			return Ok(topic);
-		}
-		catch (ArgumentOutOfRangeException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (KeyNotFoundException ex)
-		{
-			return NotFound(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var topic = await _dataService.GetTopicAsync(topicId);
+		return Ok(topic);
 	}
 
 	[HttpGet("topics/{topicId}/data")]
 	public async Task<IActionResult> GetTopicDataAsync(int topicId, [FromQuery] int? limit = null)
 	{
-		try
-		{
-			var data = await _dataService.GetTopicDataAsync(topicId, limit);
-			return Ok(data);
-		}
-		catch (ArgumentOutOfRangeException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic data");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var data = await _dataService.GetTopicDataAsync(topicId, limit);
+		return Ok(data);
 	}
 	
 	[HttpGet("topics/{topicId}/ema")]
 	public async Task<IActionResult> GetTopicEmaAsync(int topicId, [FromQuery] int? limit = null)
 	{
-		try
-		{
-			var data = await _dataService.GetTopicEmaAsync(topicId, limit);
-			return Ok(data);
-		}
-		catch (ArgumentOutOfRangeException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic ema");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var data = await _dataService.GetTopicEmaAsync(topicId, limit);
+		return Ok(data);
 	}
 	
 	[HttpGet("topics/{topicId}/prediction")]
 	public async Task<IActionResult> GetTopicPredictionAsync(int topicId)
 	{
-		try
-		{
-			var data = await _dataService.GetTopicPredictionAsync(topicId);
-			return Ok(data);
-		}
-		catch (ArgumentOutOfRangeException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic prediction");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var data = await _dataService.GetTopicPredictionAsync(topicId);
+		return Ok(data);
 	}
 
 	[HttpGet("topics/{topicId}/points")]
 	public async Task<IActionResult> GetTopicPointsAsync(int topicId)
 	{
-		try
-		{
-			var points = await _dataService.GetTopicPointsAsync(topicId);
-			return Ok(points);
-		}
-		catch (ArgumentOutOfRangeException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting area points");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		var points = await _dataService.GetTopicPointsAsync(topicId);
+		return Ok(points);
 	}
 }

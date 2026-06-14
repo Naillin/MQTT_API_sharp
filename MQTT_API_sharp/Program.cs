@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using MQTT_API_sharp.Core.Interfaces;
+using MQTT_API_sharp.Core.Middleware;
 using MQTT_API_sharp.Repositories;
 using MQTT_API_sharp.Services;
 using WaterlevelSystem_DataBaseStructure;
@@ -53,6 +54,9 @@ public class Program
 				};
 			});
 
+		builder.Services.AddProblemDetails();
+		builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+		
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen();
 		// Чтение конфига repo
@@ -76,6 +80,8 @@ public class Program
 		});
 
 		app.UseCors();
+		
+		app.UseExceptionHandler();
 
 		if (app.Environment.IsDevelopment())
 		{

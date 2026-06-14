@@ -43,37 +43,21 @@ public class AuthController : ControllerBase
 		if (!ModelState.IsValid)
 			return BadRequest(ModelState);
 			
-		try
-		{
-			var claims = await _authService.LoginAsync(loginModel);
+		var claims = await _authService.LoginAsync(loginModel);
 				
-			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-			var authProperties = new AuthenticationProperties
-			{
-				IsPersistent = true, // Сохранять куку после закрытия браузера
-				AllowRefresh = true
-			};
+		var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+		var authProperties = new AuthenticationProperties
+		{
+			IsPersistent = true, // Сохранять куку после закрытия браузера
+			AllowRefresh = true
+		};
 
-			await HttpContext.SignInAsync(
-				CookieAuthenticationDefaults.AuthenticationScheme,
-				new ClaimsPrincipal(claimsIdentity),
-				authProperties);
+		await HttpContext.SignInAsync(
+			CookieAuthenticationDefaults.AuthenticationScheme,
+			new ClaimsPrincipal(claimsIdentity),
+			authProperties);
 
-			return Ok(new { message = "Logged in successfully" });
-		}
-		catch (ArgumentException ex)
-		{
-			return BadRequest(ex.Message);
-		}
-		catch (AuthException ex)
-		{
-			return Unauthorized(new { message = ex.Message });
-		}
-		catch (Exception ex)
-		{
-			_logger.LogError(ex, "Error getting topic");
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
+		return Ok(new { message = "Logged in successfully" });
 	}
 
 	[Authorize]
