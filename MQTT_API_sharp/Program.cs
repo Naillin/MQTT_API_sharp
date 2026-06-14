@@ -1,3 +1,4 @@
+using System.Threading.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -72,6 +73,34 @@ public class Program
 		builder.Services.AddScoped<IDataService, DataService>();
 		//----------------------------------------------------------------------
 			
+		builder.Services.AddRateLimiter(options =>
+		{
+			// Ошибку 429 отдаем клиентам, превысившим лимит
+			options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+			// Глобальная политика: Ограничение по IP (30 запросов в 10 секунд)
+			options.AddPolicy("GlobalLimit", context =>
+				RateLimitPartition.GetFixedWindowLimiter(
+					partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+					factory: _ => new FixedWindowRateLimiterOptions
+					{
+						PermitLimit = 30,
+						Window = TimeSpan.FromSeconds(10),
+						QueueLimit = 0
+					}));
+
+			// Строгая политика для авторизации: Ограничение по IP (5 попыток в минуту)
+			options.AddPolicy("AuthLimit", context =>
+				RateLimitPartition.GetFixedWindowLimiter(
+					partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+					factory: _ => new FixedWindowRateLimiterOptions
+					{
+						PermitLimit = 5,
+						Window = TimeSpan.FromMinutes(1),
+						QueueLimit = 0
+					}));
+		});
+		
 		var app = builder.Build();
 			
 		app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -80,6 +109,8 @@ public class Program
 		});
 
 		app.UseCors();
+		
+		app.UseRateLimiter();
 		
 		app.UseExceptionHandler();
 
@@ -94,7 +125,7 @@ public class Program
 		app.UseAuthentication();
 		app.UseAuthorization();
 
-		app.MapControllers();
+		app.MapControllers().RequireRateLimiting("GlobalLimit");;
 
 		app.Run();
 	}

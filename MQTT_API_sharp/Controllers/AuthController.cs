@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MQTT_API_sharp.Core.Exceptions;
+using Microsoft.AspNetCore.RateLimiting;
 using MQTT_API_sharp.Core.Interfaces;
 using MQTT_API_sharp.Core.Models;
 
@@ -38,6 +38,7 @@ public class AuthController : ControllerBase
 	}
 
 	[HttpPost("login")]
+	[EnableRateLimiting("AuthLimit")]
 	public async Task<IActionResult> LoginAsync([FromBody] LoginDto loginModel)
 	{
 		if (!ModelState.IsValid)
